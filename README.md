@@ -6,10 +6,11 @@ Forum mielipiteille äänestyksillä.
 - Käyttäjä pystyy lisäämään kuvia omiin julkaisuihin.
 - Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät mielipiteet.
 - Käyttäjä pystyy etsimään aiheita hakusanalla tai muulla perusteella. 
-- Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät aiheet.
+- Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät mielipiteet.
 - Käyttäjä pystyy valitsemaan mielipiteelle yhden kategorian. Mahdolliset kategoriat ovat esim. Urheilu, Pelit, Anime ja Manga, Ruoka, Eläimet, Suhteet jne.
-- Sovelluksessa pystyy lukemaan ja kirjoittamaan kommentteja, joka luo keskustelua. 
-- Sovelluksessa pystyy äänestämään "yes", "meh" tai "no" jokaiseen mielipiteeseen ja näkemään äänestyksen tilastot. Käyttäjät näkevät kommenteissa mitä kommentoija äänesti.
+- Sovelluksessa pystyy äänestämään "yes", "meh" tai "no" jokaiseen mielipiteeseen ja näkemään äänestyksen tilastot.
+- Sovelluksessa pystyy lukemaan ja kirjoittamaan mielipiteiden perusteluja, jotta ymmärretään miksi näin äänestettiin.
+- Perusteluiden/kommenttien mukana lukee mitä käyttäjä äänesti.
 
 # Asennus
 Asenna flask-kirjasto:
