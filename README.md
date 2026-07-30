@@ -1,5 +1,5 @@
 # Mielipidepalsta
-Forum mielipiteille äänestyksillä.
+Mielipideäänestys sovellus.
 
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lisäämiään aiheita.
