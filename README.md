@@ -1,4 +1,4 @@
-# Mielipidepalsta
+# Mielipiteiden sovellus
 Mielipideäänestys sovellus.
 
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
