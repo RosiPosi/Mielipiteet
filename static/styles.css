@@ -1,13 +1,22 @@
 .header {
-  padding: 10px;
+  padding: 6px;
   text-align: left;
   background: #b4274a;
   color: white;
-  font-size: 17px;
+  font-size: 15px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.header_center {
+  padding: 6px;
+  text-align: center;
+  background: #b4274a;
+  color: white;
+  font-size: 15px;
+
 }
 
 .ver-header {
@@ -55,25 +64,23 @@
 
 .no-link {
   text-decoration: none;
-  color: rgb(203, 253, 255);
+  color: rgb(104, 14, 14);
   font-weight: bold;
 }
 
 .no-link-dark {
   text-decoration: none;
-  color: rgb(143, 15, 15);
+  color: rgb(207, 240, 255);
   font-weight: bold;
 }
 
 .post-page {
   margin-left: 300px;
-  padding: 20px;
 }
 
 .edit-btn {
   text-decoration: none;
-  color: rgb(250, 200, 200);
-  font-weight: lighter;
+  color: rgb(104, 14, 14);
 }
 
 body {
@@ -126,6 +133,7 @@ img {
   width: 350px;
   margin: 0 auto;   /* centers horizontally */
   padding: 25px;
+  margin-top: 20px;
   background: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -133,6 +141,7 @@ img {
 
 .button {
   background-color: #db3b63;
+  color: white;
 }
 
 .new_topic {

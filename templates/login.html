@@ -7,6 +7,9 @@
 </head>
 
 <body>
+  <div class="header_center">
+  <h1>Welcome back to ༺ Hot Takes ༻</h1>
+  </div>
   <div class="centered">
     {% if request.args.get('registered') %}
     <p>You can now log in. Welcome!</p>
@@ -29,11 +32,11 @@
     <form action="/login" method="post">
       <p>
         Username: <br />
-        <input type="text" name="username" />
+        <input type="text" name="username" required/>
       </p>
       <p>
         Password: <br />
-        <input type="password" name="password" />
+        <input type="password" name="password" required/>
       </p>
       <input type="submit" value="Log in" />
     </form>

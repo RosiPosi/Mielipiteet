@@ -82,6 +82,7 @@ def vote():
     except sqlite3.IntegrityError:
         return "You have already voted."
 
+    session["needs_vote_comment"] = item_id
 
     return redirect("/opinion/" + str(item_id))
 
@@ -126,6 +127,7 @@ def create_item():
 @app.route("/comment", methods=["POST"])
 def comment():
     check_login()
+    check_csrf()
 
     comment_text = request.form["comment"]
     if not comment_text or len(comment_text) > 450:
@@ -138,6 +140,7 @@ def comment():
     user_id = session["user_id"]
 
     items.add_comment(item_id, user_id, comment_text)
+    session.pop("needs_vote_comment", None)
 
     return redirect("/opinion/" + str(item_id))
 

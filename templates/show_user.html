@@ -2,16 +2,18 @@
 <html>
 
 <head>
-  <title>{{ user.username }}</title>
+  <title>User {{ user.username }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
-  <h1>User {{ user.username }}</h1>
+  <div class="header">
+  <h1>༺ {{ user.username }} ༻</h1>
+  </div>
     {% if items | count == 1 %}
-        <h2>{{ user.username }} has {{ items | count }} topic!</h2>
+        <h2>User {{ user.username }} has {{ items | count }} topic!</h2>
     {% else %}
-        <h2>{{ user.username }} has {{ items | count }} topics!</h2>
+        <h2>User {{ user.username }} has {{ items | count }} topics!</h2>
     {% endif %}
     <ul>
       {% for item in items %}
@@ -19,9 +21,8 @@
       {% endfor %}
     </ul>
 
-<!-- returns the user to the last page -->
   <p>
-    <button onclick="history.back()">Back</button>
+    <a href="/"><button>Back</button></a>
   </p>
   
 </body>

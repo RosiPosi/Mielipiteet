@@ -17,9 +17,8 @@
       <input type="submit" value="Search"> </p>
     </form>
 
-
     {% if session.username %}
-      <p>You're logged in as <a href="/user/{{ session.user_id }}" class="no-link">{{ session.username }}</a>
+      <p>You're logged in as <a href="/user/{{ session.user_id }}" class="no-link-dark">{{ session.username }}</a>
       <a href="/logout" class="logout_btn"><button>Log out</button></a></p>
     {% endif %}
 
@@ -47,7 +46,6 @@
   </div>
 
   <div class="main">
-    
 
     <!--DISCUSSIONS COLUMN-->
     
