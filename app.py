@@ -92,6 +92,7 @@ def vote():
 def new_item():
     check_login()
     classes = items.get_all_classes()
+    print("CLASSES:", classes)
     return render_template("new_item.html", classes=classes)
 
 @app.route("/create_opinion", methods=["POST"])

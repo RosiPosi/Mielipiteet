@@ -13,4 +13,12 @@ INSERT INTO classes(title, value) VALUES ('Category', 'relationships');
 INSERT INTO classes(title, value) VALUES ('Category', 'sports');
 INSERT INTO classes(title, value) VALUES ('Category', 'unique');
 
+INSERT INTO classes (title, value) VALUES ('Type', 'Serious');
+INSERT INTO classes (title, value) VALUES ('Type', 'Satire');
+INSERT INTO classes (title, value) VALUES ('Type', 'Personal');
+INSERT INTO classes (title, value) VALUES ('Type', 'Controversal');
+INSERT INTO classes (title, value) VALUES ('Type', 'Hot take');
+INSERT INTO classes (title, value) VALUES ('Type', 'Cold take');
+
+
 
