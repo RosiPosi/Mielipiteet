@@ -82,9 +82,11 @@ def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
     return db.query(sql, [item_id])
 
-def get_items():
-    sql = "SELECT id, title FROM items ORDER BY id DESC"
-    return db.query(sql)
+def get_items(page=1):
+    limit = 15
+    offset = (page - 1) * limit
+    sql = "SELECT id, title FROM items ORDER BY id DESC LIMIT ? OFFSET ?"
+    return db.query(sql, [limit, offset])
 
 def get_item(item_id):
     sql = """SELECT items.id,
@@ -121,22 +123,23 @@ def remove_item(item_id):
     db.execute("DELETE FROM items WHERE id = ?", [item_id])
 
 
-def search_results(query, category="", opinion_type=""):
-    sql = """SELECT id, title
-             FROM items
-             WHERE (title LIKE ? OR description LIKE ?)
-             AND (? = '' OR EXISTS (
-                 SELECT 1 FROM item_classes
-                 WHERE item_id = items.id
-                 AND title = 'Category' AND value = ?
-             ))
-             AND (? = '' OR EXISTS (
-                 SELECT 1 FROM item_classes
-                 WHERE item_id = items.id
-                 AND title = 'Type' AND value = ?
-             ))
-             ORDER BY id DESC"""
+def search_results(query, category="", opinion_type="", page=1):
+    limit = 15
+    offset = (page - 1) * limit
+
+    sql = """SELECT id, title FROM items
+            WHERE (title LIKE ? OR description LIKE ?)
+            AND (? = '' OR EXISTS (
+            SELECT 1 FROM item_classes
+            WHERE item_id = items.id
+            AND title = 'Category' AND value = ?))
+            AND (? = '' OR EXISTS (
+            SELECT 1 FROM item_classes
+            WHERE item_id = items.id
+            AND title = 'Type' AND value = ?))
+            ORDER BY id DESC
+            LIMIT ? OFFSET ?"""
 
     like = "%" + query + "%"
     return db.query(sql, [like, like, category, category,
-                          opinion_type, opinion_type])
+                          opinion_type, opinion_type, limit, offset])

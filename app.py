@@ -33,9 +33,12 @@ def show_lines(content):
 
 @app.route("/")
 def index():
-    all_items = items.get_items()
+    page = request.args.get("page", 1, type=int)
+    if page < 1:
+        page = 1
+    all_items = items.get_items(page)
     classes = items.get_all_classes()
-    return render_template("index.html", items=all_items, classes=classes)
+    return render_template("index.html", items=all_items, classes=classes, page=page)
 
 @app.route("/opinion/<int:item_id>")
 def show_item(item_id):
@@ -299,13 +302,18 @@ def search():
     query = request.args.get("query")
     category = request.args.get("category", "")
     opinion_type = request.args.get("type", "")
+    page = request.args.get("page", 1, type=int)
+
+    if page < 1:
+        page = 1
 
     classes = items.get_all_classes()
 
-    results = items.search_results(query, category, opinion_type)
+    results = items.search_results(query, category, opinion_type, page)
 
     return render_template("search_results.html", query=query, results=results, 
-                           category=category, opinion_type=opinion_type, classes=classes)
+                           category=category, opinion_type=opinion_type, 
+                        classes=classes, page=page)
 
 # REGISTRATION AND LOGGING IN / USER RELATED CODE
 

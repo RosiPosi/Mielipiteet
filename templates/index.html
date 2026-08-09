@@ -88,6 +88,20 @@
       {% endfor %}
     </ul>
 
+      <div class="pagination">
+
+      {% if page > 1 %}
+          <a href="/?page={{ page - 1 }}" class="no-link">🡨</a>
+      {% endif %}
+
+      <span>Page {{ page }}</span>
+
+      {% if items|length == 15 %}
+          <a href="/?page={{ page + 1 }}" class="no-link">🡪</a>
+      {% endif %}
+
+    </div>
+
   </div>
 
     {% if session.username %}
