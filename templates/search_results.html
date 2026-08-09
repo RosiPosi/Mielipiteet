@@ -2,7 +2,11 @@
 <html>
 
 <head>
-  <title>Opinions on {{ query }}</title>
+  {% if query == "" %}
+  <title>Search results</title>
+  {% else %}
+  <title>Opinions about {{ query }}</title>
+  {% endif %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
@@ -52,17 +56,31 @@
     <!--DISCUSSIONS COLUMN-->
 
     {% if results %}
+        {% if query == "" %}
+        <h2>Results:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
+        {% else %}
         <h2>Opinions about {{ query }}:</h2>
         <ul>
         {% for item in results %}
             <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
         {% endfor %}
         </ul>
+        {% endif %}
 
   
     {% else %}
+        {% if query == "" %}
         <h2>No results :(</h2>
-        <h1>Try something else, or</h1>
+        <h4>Try something else!</h4>
+        {% else %}
+        <h2>No results for {{ query }} :(</h2>
+        <h4>Try different filters!</h4>
+        {% endif %}
         {% if session.user_id %}
           <a href="/new_opinion">
               <button class="button">Create one!</button>

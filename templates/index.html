@@ -13,7 +13,7 @@
 
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}" required>
+      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
         <select name="category">
           <option value="">All categories</option>
           {% for option in classes["Category"] %}
