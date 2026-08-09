@@ -33,7 +33,7 @@
     {% endfor %}
     </p>
 
-    <div class="border" class="limit">{{ item.description | show_lines }}</div>
+    <div class="border">{{ item.description | show_lines }}</div>
 
     <p>
       Opinion by: <a href="/user/{{ item.user_id }}" class="no-link">{{ item.username }}</a>
@@ -54,7 +54,7 @@
       <a href="/"><button>Back</button></a>
     </p>
 
-    <h2>Community Poll:</h2>
+    <h2>Votes:</h2>
     <div class="poll-results">
         <span>Yes: {{ reaction_counts.yes }}</span>
         <span>Meh: {{ reaction_counts.meh }}</span>
@@ -62,7 +62,6 @@
     </div>
 
       <p>
-        <h3>Vote:</h3> 
         {% if session.user_id %}
           
           {% if not user_vote %}
