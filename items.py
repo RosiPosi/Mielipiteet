@@ -121,10 +121,22 @@ def remove_item(item_id):
     db.execute("DELETE FROM items WHERE id = ?", [item_id])
 
 
-def search_results(query):
+def search_results(query, category="", opinion_type=""):
     sql = """SELECT id, title
-                FROM items
-                WHERE title LIKE ? OR description LIKE ?
-                ORDER BY id DESC"""
+             FROM items
+             WHERE (title LIKE ? OR description LIKE ?)
+             AND (? = '' OR EXISTS (
+                 SELECT 1 FROM item_classes
+                 WHERE item_id = items.id
+                 AND title = 'Category' AND value = ?
+             ))
+             AND (? = '' OR EXISTS (
+                 SELECT 1 FROM item_classes
+                 WHERE item_id = items.id
+                 AND title = 'Type' AND value = ?
+             ))
+             ORDER BY id DESC"""
+
     like = "%" + query + "%"
-    return db.query(sql, [like, like])
+    return db.query(sql, [like, like, category, category,
+                          opinion_type, opinion_type])

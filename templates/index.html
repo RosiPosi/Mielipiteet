@@ -13,7 +13,26 @@
 
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
+      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}" required>
+        <select name="category">
+          <option value="">All categories</option>
+          {% for option in classes["Category"] %}
+              <option value="{{ option }}"
+              {% if category == option %}selected{% endif %}>
+              {{ option }}
+              </option>
+          {% endfor %}
+        </select>
+
+        <select name="type">
+          <option value="">All types</option>
+          {% for option in classes["Type"] %}
+              <option value="{{ option }}"
+              {% if opinion_type == option %}selected{% endif %}>
+              {{ option }}
+              </option>
+          {% endfor %}
+        </select>
       <input type="submit" value="Search"> </p>
     </form>
 

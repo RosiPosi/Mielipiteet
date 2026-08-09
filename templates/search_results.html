@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Topics on {{ query }}</title>
+  <title>Opinions on {{ query }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
@@ -14,6 +14,25 @@
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
       <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
+        <select name="category">
+          <option value="">All categories</option>
+          {% for option in classes["Category"] %}
+              <option value="{{ option }}"
+              {% if category == option %}selected{% endif %}>
+              {{ option }}
+              </option>
+          {% endfor %}
+        </select>
+
+        <select name="type">
+          <option value="">All types</option>
+          {% for option in classes["Type"] %}
+              <option value="{{ option }}"
+              {% if opinion_type == option %}selected{% endif %}>
+              {{ option }}
+              </option>
+          {% endfor %}
+        </select>
       <input type="submit" value="Search"> </p>
     </form>
 
@@ -42,7 +61,8 @@
 
   
     {% else %}
-        <h2>No opinions about {{ query }} :(</h2>
+        <h2>No results :(</h2>
+        <h1>Try something else, or</h1>
         {% if session.user_id %}
           <a href="/new_opinion">
               <button class="button">Create one!</button>
