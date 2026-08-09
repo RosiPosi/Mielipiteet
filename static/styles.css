@@ -89,23 +89,27 @@ body {
 }
 
 .search-container {
-    width: 60%;
-    margin: 0 auto;
-    text-align: left;
+  width: 60%;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .search-container ul {
-    text-align: left;
-    display: inline-block;
+  text-align: left;
+  display: inline-block;
 }
 
 .border {
-    border-width: 3px;
-      
-    border-style: solid;
-    border-color:rgb(202, 78, 84);
-    padding: 10px;
-    display: inline-block;
+  border-width: 3px;
+  width: 500px;
+  border-style: solid;
+  border-color:rgb(202, 78, 84);
+  padding: 10px;
+  display: inline-block;
+}
+
+.limit{
+  width: 500px;
 }
 
 .cat {
@@ -119,14 +123,14 @@ body {
 }
 
 img {
-    width: 200px;
-    height: auto;
+  width: 200px;
+  height: auto;
 }
 
 .poll-results {
-    display: flex;
-    gap: 50px; 
-    margin-bottom: 20px;
+  display: flex;
+  gap: 50px; 
+  margin-bottom: 20px;
 }
 
 .centered {
@@ -142,6 +146,8 @@ img {
 .button {
   background-color: #db3b63;
   color: white;
+  padding: 10px;
+  font-size: 17px;
 }
 
 .new_topic {
@@ -151,7 +157,8 @@ img {
   border-width: 5px;
   border-radius: 45px;
   border-style: solid;
-  width: 80px;
+  height: 50px;
+  width: 70px;
   background-color: #db3b63;
   border-color: (100, 35, 35);
 }

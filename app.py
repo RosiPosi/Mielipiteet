@@ -101,12 +101,13 @@ def create_item():
     check_login()
     check_csrf()
 
-    title = request.form["title"]
+    title = request.form["title"].strip()
     description = request.form["description"]
     user_id = session["user_id"]
 
     if not title or len(title) > 50:
-        abort(403)
+        flash("ERROR: Please input a title in the requested format.")
+        return redirect("/new_opinion")
     if len(description) > 1000:
         abort(403)
 
@@ -178,7 +179,7 @@ def update_item():
     if item["user_id"] != session["user_id"]:
         abort(403)
 
-    title = request.form["title"]
+    title = request.form["title"].strip()
     description = request.form["description"]
 
     if not title or len(title) > 50:

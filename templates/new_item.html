@@ -11,6 +11,9 @@
   <h1>New topic</h1>
   </div>
   <form action="/create_opinion" method="post">
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
     <p>
       Title: <br />
       <input type="text" size="60" name="title" maxlength="50" placeholder="What's on your mind?" required/>
