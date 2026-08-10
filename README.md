@@ -5,9 +5,10 @@ Mielipideäänestys sovellus.
 - Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lisäämiään aiheita.
 - Käyttäjä pystyy lisäämään kuvia omiin julkaisuihin.
 - Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät mielipiteet.
-- Käyttäjä pystyy etsimään aiheita hakusanalla tai muulla perusteella. 
+- Käyttäjä pystyy etsimään aiheita hakusanalla tai kategorian suodatuksilla. 
 - Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät mielipiteet.
 - Käyttäjä pystyy valitsemaan mielipiteelle yhden kategorian. Mahdolliset kategoriat ovat esim. Urheilu, Pelit, Anime ja Manga, Ruoka, Eläimet, Suhteet jne.
+- Käyttäjä pystyy valitsemaan mielipiteelle "tyypin", joka kuvaa onko julkaisu esim. satiirinen, vakava tai henkilökohtainen.
 - Sovelluksessa pystyy äänestämään "yes", "meh" tai "no" jokaiseen mielipiteeseen ja näkemään äänestyksen tilastot.
 - Sovelluksessa pystyy lukemaan ja kirjoittamaan mielipiteiden perusteluja, jotta ymmärretään miksi näin äänestettiin.
 - Perusteluiden/kommenttien mukana lukee mitä käyttäjä äänesti.
