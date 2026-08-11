@@ -41,7 +41,7 @@ def index():
     return render_template("index.html", items=all_items, classes=classes, page=page)
 
 @app.route("/opinion/<int:item_id>")
-def show_item(item_id):
+def show_post(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -54,7 +54,7 @@ def show_item(item_id):
     if "user_id" in session:
         user_vote = items.has_user_voted(item_id, session["user_id"])
 
-    return render_template("show_item.html", item=item, classes=classes,
+    return render_template("show_post.html", item=item, classes=classes,
                            comments=comments, images=images,
                            reaction_counts=reaction_counts, user_vote=user_vote)
 
@@ -93,11 +93,11 @@ def vote():
 # POSTING / EDITING
 
 @app.route("/new_opinion")
-def new_item():
+def new_post():
     check_login()
     classes = items.get_all_classes()
     print("CLASSES:", classes)
-    return render_template("new_item.html", classes=classes)
+    return render_template("new_post.html", classes=classes)
 
 @app.route("/create_opinion", methods=["POST"])
 def create_item():
@@ -151,7 +151,7 @@ def comment():
     return redirect("/opinion/" + str(item_id))
 
 @app.route("/edit_opinion/<int:item_id>")
-def edit_item(item_id):
+def edit_post(item_id):
     check_login()
     item = items.get_item(item_id)
     if not item:
@@ -166,7 +166,7 @@ def edit_item(item_id):
     for entry in items.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item=item, classes=classes,
+    return render_template("edit_post.html", item=item, classes=classes,
                            all_classes=all_classes)
 
 @app.route("/update_opinion", methods=["POST"])

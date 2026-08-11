@@ -150,15 +150,3 @@ img {
   font-size: 17px;
 }
 
-.new_topic {
-  position: fixed;
-  bottom: 40px;
-  left: 45%;
-  border-width: 5px;
-  border-radius: 45px;
-  border-style: solid;
-  height: 50px;
-  width: 70px;
-  background-color: #db3b63;
-  border-color: (100, 35, 35);
-}
