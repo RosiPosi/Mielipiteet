@@ -45,3 +45,20 @@ CREATE TABLE images (
     image BLOB
 );
 
+CREATE INDEX idx_items_user_id
+ON items(user_id);
+
+CREATE INDEX idx_item_classes_item_id
+ON item_classes(item_id);
+
+CREATE INDEX idx_item_classes_title_value
+ON item_classes(title, value);
+
+CREATE INDEX idx_votes_item_id
+ON votes(item_id);
+
+CREATE INDEX idx_comments_item_id
+ON comments(item_id);
+
+CREATE INDEX idx_images_item_id
+ON images(item_id);
