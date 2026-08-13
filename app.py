@@ -68,6 +68,7 @@ def show_user(user_id):
 @app.route("/vote", methods=["POST"])
 def vote():
     check_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     reaction = request.form["reaction"]
@@ -352,8 +353,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    if "user_id" in session:
-        del session["user_id"]
-        del session["username"]
+    check_login()
+    session.clear()
 
     return redirect("/")
