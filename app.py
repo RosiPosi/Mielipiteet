@@ -11,7 +11,6 @@ import users
 
 print("USING ITEMS FILE:", items.__file__)
 
-
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
@@ -89,8 +88,6 @@ def vote():
     session["needs_vote_comment"] = item_id
 
     return redirect("/opinion/" + str(item_id))
-
-# POSTING / EDITING
 
 @app.route("/new_opinion")
 def new_post():
@@ -227,8 +224,6 @@ def remove_item(item_id):
         else:
             return redirect("/opinion/" + str(item_id))
 
-# IMAGES
-
 @app.route("/add_image", methods=["POST"])
 def add_image():
     check_login()
@@ -251,7 +246,6 @@ def add_image():
         if len(image) > 1920 * 1080:
             flash("ERROR: Your file is too big!")
             return redirect("/images/" + str(item_id))
-
 
         items.add_image(item_id, image)
         return redirect("/images/" + str(item_id))
@@ -296,7 +290,6 @@ def remove_images():
 
     return redirect("/images/" + str(item_id))
 
-# SEARCHING
 @app.route("/search")
 def search():
     query = request.args.get("query")
@@ -308,14 +301,11 @@ def search():
         page = 1
 
     classes = items.get_all_classes()
-
     results = items.search_results(query, category, opinion_type, page)
 
     return render_template("search_results.html", query=query, results=results, 
                            category=category, opinion_type=opinion_type, 
                         classes=classes, page=page)
-
-# REGISTRATION AND LOGGING IN / USER RELATED CODE
 
 @app.route("/register")
 def register():
@@ -340,7 +330,6 @@ def create():
         return redirect("/register")
 
     return redirect("/login?registered=1")
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

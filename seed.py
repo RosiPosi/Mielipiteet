@@ -2,7 +2,6 @@ import db
 import sqlite3
 import time
 
-
 db_connection = db.get_connection()
 
 start_time = time.perf_counter()
