@@ -6,10 +6,10 @@ from flask import abort, flash, make_response, redirect, render_template, reques
 import markupsafe
 
 import config
-import items
+import posts
 import users
 
-print("USING ITEMS FILE:", items.__file__)
+print("USING ITEMS FILE:", posts.__file__)
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -35,23 +35,23 @@ def index():
     page = request.args.get("page", 1, type=int)
     if page < 1:
         page = 1
-    all_items = items.get_items(page)
-    classes = items.get_all_classes()
+    all_items = posts.get_items(page)
+    classes = posts.get_all_classes()
     return render_template("index.html", items=all_items, classes=classes, page=page)
 
 @app.route("/opinion/<int:item_id>")
 def show_post(item_id):
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
-    classes = items.get_classes(item_id)
-    comments = items.get_comments(item_id)
-    images = items.get_images(item_id)
-    reaction_counts = items.get_reaction_counts(item_id)
+    classes = posts.get_classes(item_id)
+    comments = posts.get_comments(item_id)
+    images = posts.get_images(item_id)
+    reaction_counts = posts.get_reaction_counts(item_id)
 
     user_vote = None
     if "user_id" in session:
-        user_vote = items.has_user_voted(item_id, session["user_id"])
+        user_vote = posts.has_user_voted(item_id, session["user_id"])
 
     return render_template("show_post.html", item=item, classes=classes,
                            comments=comments, images=images,
@@ -78,11 +78,11 @@ def vote():
     if reaction not in allowed:
         return "Invalid reaction."
 
-    if items.has_user_voted(item_id, session["user_id"]):
+    if posts.has_user_voted(item_id, session["user_id"]):
         return "You have already voted."
 
     try:
-        items.add_vote(item_id, session["user_id"], reaction)
+        posts.add_vote(item_id, session["user_id"], reaction)
     except sqlite3.IntegrityError:
         return "You have already voted."
 
@@ -93,7 +93,7 @@ def vote():
 @app.route("/new_opinion")
 def new_post():
     check_login()
-    classes = items.get_all_classes()
+    classes = posts.get_all_classes()
     print("CLASSES:", classes)
     return render_template("new_post.html", classes=classes)
 
@@ -110,21 +110,24 @@ def create_item():
         flash("ERROR: Please input a title in the requested format.")
         return redirect("/new_opinion")
     if len(description) > 1000:
-        abort(403)
+        flash("ERROR: Description can be at most 1000 characters.")
+        return redirect("/new_opinion")
 
-    all_classes = items.get_all_classes()
+    all_classes = posts.get_all_classes()
 
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
             category, name = entry.split(":")
             if category not in all_classes:
-                abort(403)
+                flash("ERROR: Non-existent category")
+                return redirect("/new_opinion")
             if name not in all_classes[category]:
-                abort(403)
+                flash("ERROR: Non-existent category")
+                return redirect("/new_opinion")
             classes.append((category, name))
 
-    items.add_item(title, description, user_id, classes)
+    posts.add_item(title, description, user_id, classes)
 
     return redirect("/")
 
@@ -135,15 +138,16 @@ def comment():
 
     comment_text = request.form["comment"]
     if not comment_text or len(comment_text) > 450:
-        abort(403)
+        flash("ERROR: Comments can be at most 450 characters.")
+        return redirect("/opinion/" + str(item_id))
 
     item_id = request.form["item_id"]
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(403)
     user_id = session["user_id"]
 
-    items.add_comment(item_id, user_id, comment_text)
+    posts.add_comment(item_id, user_id, comment_text)
     session.pop("needs_vote_comment", None)
 
     return redirect("/opinion/" + str(item_id))
@@ -151,17 +155,17 @@ def comment():
 @app.route("/edit_opinion/<int:item_id>")
 def edit_post(item_id):
     check_login()
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
 
-    all_classes = items.get_all_classes()
+    all_classes = posts.get_all_classes()
     classes = {}
     for my_class in all_classes:
         classes[my_class] = ""
-    for entry in items.get_classes(item_id):
+    for entry in posts.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
     return render_template("edit_post.html", item=item, classes=classes,
@@ -174,7 +178,7 @@ def update_item():
 
     item_id = request.form["item_id"]
 
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item["user_id"] != session["user_id"]:
@@ -184,23 +188,27 @@ def update_item():
     description = request.form["description"]
 
     if not title or len(title) > 50:
-        abort(403)
+        flash("ERROR: Please input a title in the requested format.")
+        return redirect("/new_opinion")
     if len(description) > 1000:
-        abort(403)
+        flash("ERROR: Description can be at most 1000 characters.")
+        return redirect("/new_opinion")
 
-    all_classes = items.get_all_classes()
+    all_classes = posts.get_all_classes()
 
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
             category, name = entry.split(":")
             if category not in all_classes:
-                abort(403)
+                flash("ERROR: Non-existent category")
+                return redirect("/new_opinion")
             if name not in all_classes[category]:
-                abort(403)
+                flash("ERROR: Non-existent category")
+                return redirect("/new_opinion")
             classes.append((category, name))
 
-    items.update_item(item_id, title, description, classes)
+    posts.update_item(item_id, title, description, classes)
 
     return redirect("/opinion/" + str(item_id))
 
@@ -208,7 +216,7 @@ def update_item():
 def remove_item(item_id):
     check_login()
 
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item[ "user_id"] != session["user_id"]:
@@ -220,7 +228,7 @@ def remove_item(item_id):
     if request.method == "POST":
         check_csrf()
         if "remove" in request.form:
-            items.remove_item(item_id)
+            posts.remove_item(item_id)
             return redirect("/")
         else:
             return redirect("/opinion/" + str(item_id))
@@ -231,7 +239,7 @@ def add_image():
     check_csrf()
 
     item_id = request.form["item_id"]
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item[ "user_id"] != session["user_id"]:
@@ -248,25 +256,25 @@ def add_image():
             flash("ERROR: Your file is too big!")
             return redirect("/images/" + str(item_id))
 
-        items.add_image(item_id, image)
+        posts.add_image(item_id, image)
         return redirect("/images/" + str(item_id))
 
 @app.route("/images/<int:item_id>")
 def edit_images(item_id):
     check_login()
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item[ "user_id"] != session["user_id"]:
         abort(403)
 
-    images = items.get_images(item_id)
+    images = posts.get_images(item_id)
 
     return render_template("images.html", item=item, images=images)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):
-    image = items.get_image(image_id)
+    image = posts.get_image(image_id)
     if not image:
         abort(404)
 
@@ -280,14 +288,14 @@ def remove_images():
     check_csrf()
 
     item_id = request.form["item_id"]
-    item = items.get_item(item_id)
+    item = posts.get_item(item_id)
     if not item:
         abort(404)
     if item[ "user_id"] != session["user_id"]:
         abort(403)
 
     for image_id in request.form.getlist("image_id"):
-        items.remove_image(item_id, image_id)
+        posts.remove_image(item_id, image_id)
 
     return redirect("/images/" + str(item_id))
 
@@ -301,8 +309,8 @@ def search():
     if page < 1:
         page = 1
 
-    classes = items.get_all_classes()
-    results = items.search_results(query, category, opinion_type, page)
+    classes = posts.get_all_classes()
+    results = posts.search_results(query, category, opinion_type, page)
 
     return render_template("search_results.html", query=query, results=results, 
                            category=category, opinion_type=opinion_type, 
