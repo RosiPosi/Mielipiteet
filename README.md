@@ -30,3 +30,20 @@ Käynnistys:
 - Windows: flask run
 
 Vaihda config.py secret key, jotta session toimisi paremmin!
+
+# Sovelluksen toiminta suurella tietomäärällä
+Käytin testauksessa koodia, joka näkyy seed.py tiedostossa.
+Tässä on tulokset eri määrillä ja niiden ajoilla:
+
+Added 5000 test opinions.
+Time taken: 0.0212 seconds
+
+Added 50000 test opinions.
+Time taken: 0.1995 seconds
+
+Added 500000 test opinions.
+Time taken: 1.5802 seconds
+
+Voidaan havaita, että mitä enemmän lisätään kerralla, sitä hitaammaksi prosessi muuttuu.
+Koodi lisäsi tietokantaan 5000-500000 julkaisua ja kaikki ilmestyi sivulle moitteettomasti. 
+Jos julkaisuja on kuitenkin liikaa, sivusta tulee hyvin pitkä. Tämän takia tietokohteiden sivutus on kätevää.
