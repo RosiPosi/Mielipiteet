@@ -12,7 +12,8 @@
 
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
+      <p><input type="text" name="query" placeholder="I'd like to discuss..." 
+        value="{{ query }}">
         <select name="category">
           <option value="">All categories</option>
           {% for option in classes["Category"] %}
@@ -36,7 +37,8 @@
     </form>
 
     {% if session.username %}
-      <p>You're logged in as <a href="/user/{{ session.user_id }}" class="no-link-dark">{{ session.username }}</a>
+      <p>You're logged in as <a href="/user/{{ session.user_id }}" 
+        class="no-link-dark">{{ session.username }}</a>
       <a href="/logout" class="logout_btn"><button>Log out</button></a></p>
     {% endif %}
 
@@ -106,7 +108,8 @@
           <input type="hidden" name="item_id" value="{{ item.id }}">
           <p>
               <label for="comment">Please explain your vote!:</label> </br>
-              <textarea id="comment" name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+              <textarea id="comment" name="comment" rows="6" 
+              cols="60" maxlength="450" required></textarea>
           </p>
 
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
@@ -147,7 +150,8 @@
           <input type="hidden" name="item_id" value="{{ item.id }}">
           <p>
               <label for="comment"></label> </br>
-              <textarea id="comment" name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+              <textarea id="comment" name="comment" rows="6" 
+              cols="60" maxlength="450" required></textarea>
           </p>
 
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
