@@ -1,52 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ item.title }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}{{ item.title }}{% endblock %}
 
-<body>
-  <div class="header">
-  <h1>༺ Hot Takes ༻</h1>
+{% block content %}
 
-    <!--SEARCH BAR-->
-    <form action="/search" method="GET">
-      <p><input type="text" name="query" placeholder="I'd like to discuss..." 
-        value="{{ query }}">
-        <select name="category">
-          <option value="">All categories</option>
-          {% for option in classes["Category"] %}
-              <option value="{{ option }}"
-              {% if category == option %}selected{% endif %}>
-              {{ option }}
-              </option>
-          {% endfor %}
-        </select>
-
-        <select name="type">
-          <option value="">All types</option>
-          {% for option in classes["Type"] %}
-              <option value="{{ option }}"
-              {% if opinion_type == option %}selected{% endif %}>
-              {{ option }}
-              </option>
-          {% endfor %}
-        </select>
-      <input type="submit" value="Search"> </p>
-    </form>
-
-    {% if session.username %}
-      <p>You're logged in as <a href="/user/{{ session.user_id }}" 
-        class="no-link-dark">{{ session.username }}</a>
-      <a href="/logout" class="logout_btn"><button>Log out</button></a></p>
-    {% endif %}
-
-    {% if not session.username %}
-      <p><a href="/login"><button>Log in</button></a>
-      <a href="/register"><button>Create an account</button></a></p>
-    {% endif %}
-  </div>
     <div class="post-page">
     <h1 class="limit">{{ item.title }}</h1>
     <p>{% for image in images %}
@@ -160,6 +117,4 @@
         </form>
       {% endif %}
     </div>
-</body>
-
-</html>
+{% endblock %}
