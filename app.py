@@ -24,6 +24,10 @@ def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
+@app.errorhandler(403)
+def forbidden(error):
+    return redirect("/")
+
 @app.template_filter()
 def show_lines(content):
     content = str(markupsafe.escape(content))
