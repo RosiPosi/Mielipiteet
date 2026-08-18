@@ -77,17 +77,23 @@
       <div class="pagination">
 
       {% if page > 1 %}
-          <a href="/search?query={{ query }}&category={{ category }}
-          &type={{ opinion_type }}&page={{ page - 1 }}" 
+      <a href="{{ url_for('search',
+          query=query,
+          category=category,
+          type=opinion_type,
+          page=page - 1) }}"
           class="no-link">🡨</a>
       {% endif %}
 
       <span>Page {{ page }}</span>
 
       {% if results|length == 15 %}
-          <a href="/search?query={{ query }}&category={{ category }}
-          &type={{ opinion_type }}&page={{ page + 1 }}" 
-          class="no-link">🡪</a>
+        <a href="{{ url_for('search',
+            query=query,
+            category=category,
+            type=opinion_type,
+            page=page + 1) }}"
+            class="no-link">🡪</a>
       {% endif %}
 
       </div>
