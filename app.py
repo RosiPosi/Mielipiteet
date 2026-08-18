@@ -62,8 +62,16 @@ def show_user(user_id):
     user = users.get_user(user_id)
     if not user:
         abort(404)
-    user_items = users.get_item(user_id)
-    return render_template("show_user.html", user=user, items=user_items)
+
+    page = request.args.get("page", 1, type=int)
+    if page < 1:
+        page = 1
+
+    user_items = users.get_item(user_id, page)
+    item_count = users.get_item_count(user_id)
+
+    return render_template("show_user.html", user=user, items=user_items, 
+                           item_count=item_count, page=page)
 
 @app.route("/vote", methods=["POST"])
 def vote():
@@ -301,9 +309,9 @@ def remove_images():
 
 @app.route("/search")
 def search():
-    query = request.args.get("query")
-    category = request.args.get("category", "")
-    opinion_type = request.args.get("type", "")
+    query = request.args.get("query", "").strip()
+    category = request.args.get("category", "").strip()
+    opinion_type = request.args.get("type", "").strip()
     page = request.args.get("page", 1, type=int)
 
     if page < 1:
