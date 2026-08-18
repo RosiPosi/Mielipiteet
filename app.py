@@ -69,9 +69,10 @@ def show_user(user_id):
 
     user_items = users.get_item(user_id, page)
     item_count = users.get_item_count(user_id)
+    classes = posts.get_all_classes()
 
     return render_template("show_user.html", user=user, items=user_items, 
-                           item_count=item_count, page=page)
+                           item_count=item_count, classes=classes, page=page)
 
 @app.route("/vote", methods=["POST"])
 def vote():
