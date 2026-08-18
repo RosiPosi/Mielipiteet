@@ -226,7 +226,7 @@ def update_item():
     return redirect("/opinion/" + str(item_id))
 
 @app.route("/remove_opinion/<int:item_id>", methods=["GET", "POST"])
-def remove_item(item_id):
+def remove_post(item_id):
     check_login()
 
     item = posts.get_item(item_id)
@@ -236,7 +236,7 @@ def remove_item(item_id):
         abort(403)
 
     if request.method == "GET":
-        return render_template("remove_item.html", item=item)
+        return render_template("remove_post.html", item=item)
 
     if request.method == "POST":
         check_csrf()
