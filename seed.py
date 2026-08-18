@@ -6,7 +6,7 @@ db_connection = db.get_connection()
 
 start_time = time.perf_counter()
 
-for i in range(500000):
+for i in range(5000):
     db_connection.execute("""
         INSERT INTO items(title, description, user_id)
         VALUES (?, ?, ?)
