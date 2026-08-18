@@ -13,6 +13,8 @@
   <div class="centered">
     {% if request.args.get('registered') %}
     <p>You can now log in. Welcome!</p>
+    {% else %}
+    <p>No account? <a href="/register">Register</a></p>
     {% endif %}
     {% if session.username %}
     <p>
