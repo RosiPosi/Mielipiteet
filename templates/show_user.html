@@ -10,16 +10,32 @@
   <div class="header">
   <h1>༺ {{ user.username }} ༻</h1>
   </div>
-    {% if items | count == 1 %}
-        <h2>User {{ user.username }} has {{ items | count }} topic!</h2>
+    {% if item_count == 1 %}
+        <h2>User {{ user.username }} has {{ item_count }} topic!</h2>
     {% else %}
-        <h2>User {{ user.username }} has {{ items | count }} topics!</h2>
+        <h2>User {{ user.username }} has {{ item_count }} topics!</h2>
     {% endif %}
     <ul>
       {% for item in items %}
         <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
       {% endfor %}
     </ul>
+
+    <div class="pagination">
+
+      {% if page > 1 %}
+        <a href="/user/{{ user.id }}?page={{ page - 1 }}"
+          class="no-link">🡨</a>
+      {% endif %}
+
+      <span>Page {{ page }}</span>
+
+      {% if items|length == 15 %}
+        <a href="/user/{{ user.id }}?page={{ page + 1 }}"
+          class="no-link">🡪</a>
+      {% endif %}
+
+    </div>
 
   <p>
     <a href="/"><button>Back</button></a>

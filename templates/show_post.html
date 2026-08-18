@@ -2,11 +2,16 @@
 <html>
 
 <head>
-  <title>{{ item.title }}</title>
+  {% if query == "" %}
+  <title>Search results</title>
+  {% else %}
+  <title>Opinions about {{ query }}</title>
+  {% endif %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
+
   <div class="header">
   <h1>༺ Hot Takes ༻</h1>
 
@@ -47,119 +52,75 @@
       <a href="/register"><button>Create an account</button></a></p>
     {% endif %}
   </div>
-    <div class="post-page">
-    <h1 class="limit">{{ item.title }}</h1>
-    <p>{% for image in images %}
-    <img src="/image/{{ image.id }}" alt="Image for topic"/>
-    {% endfor %}
-    </p>
 
-    <div class="border">{{ item.description | show_lines }}</div>
+  <div class="search-container">
 
-    <p>
-      Opinion by: <a href="/user/{{ item.user_id }}" class="no-link">{{ item.username }}</a>
-      <p>
-      Categories:
-      {% for class in classes %}
-      <span class="cat">{{ class.value }}</span>
-      {% endfor %}
-      </p>
-    </p>
+    <!--DISCUSSIONS COLUMN-->
 
-    {% if session.user_id == item.user_id %}
-      <a href="/edit_opinion/{{ item.id }}" class="edit-btn">Edit text</a> •
-      <a href="/images/{{ item.id }}" class="edit-btn">Edit images</a> •
-      <a href="/remove_opinion/{{ item.id }}" class="edit-btn">Delete</a>
-    {% endif %}
-    <p>
-      <a href="/"><button>Back</button></a>
-    </p>
-
-    <h2>Votes:</h2>
-    <div class="poll-results">
-        <span>Yes: {{ reaction_counts.yes }}</span>
-        <span>Meh: {{ reaction_counts.meh }}</span>
-        <span>No: {{ reaction_counts.no }}</span>
-    </div>
-
-      <p>
-        {% if session.user_id %}
-          
-          {% if not user_vote %}
-
-          <form action="/vote" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
-
-          <label for="reaction">What do you think?</label>
-          <select id="reaction" name="reaction" required>
-              <option value="yes">Yes</option>
-              <option value="meh">Meh</option>
-              <option value="no">No</option>
-          </select>
-          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-          <input type="submit" value="Vote" />
-
-          </form>
-        {% elif session.needs_vote_comment == item.id|string %}
-
-        <p>You voted: {{ user_vote | upper }}</p>
-
-          <form action="/comment" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
-          <p>
-              <label for="comment">Please explain your vote!:</label> </br>
-              <textarea id="comment" name="comment" rows="6" 
-              cols="60" maxlength="450" required></textarea>
-          </p>
-
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-            <input type="submit" value="Post" />
-          
-        </form>
-
-          {% else %}
-            <p>You already voted: {{ user_vote | upper }}</p>
-          {% endif %}
-
-        {% else %}
-        <p><a href="/login">Log in</a> to give your vote!</p>
-        {% endif %}
-      </p>
-    
-      <h2>Comments:</h2>
-      <ul>
-        {% for comment in comments %}
-        <p>
-        <a href="/user/{{ comment.user_id }}" class="no-link">
-            {{ comment.username }}
-        </a>
-
-        {% if comment.reaction %}
-            [{{ comment.reaction|upper }}]
-        {% endif %}
-        : {{ comment.comment | show_lines }}
-              </p>
-
-        {% else %}
-        <p>No comments yet!</p>
+    {% if results %}
+        {% if query == "" %}
+        <h2>Results:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
         {% endfor %}
-      </ul>
+        </ul>
+        {% else %}
+        <h2>Opinions about {{ query }}:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
 
-      {% if session.user_id and user_vote and session.needs_vote_comment != item.id|string %}
-         <form action="/comment" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
-          <p>
-              <label for="comment"></label> </br>
-              <textarea id="comment" name="comment" rows="6" 
-              cols="60" maxlength="450" required></textarea>
-          </p>
+      <div class="pagination">
 
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-            <input type="submit" value="Post" />
-          
-        </form>
+      {% if page > 1 %}
+      <a href="{{ url_for('search',
+          query=query,
+          category=category,
+          type=opinion_type,
+          page=page - 1) }}"
+          class="no-link">🡨</a>
       {% endif %}
-    </div>
-</body>
 
+      <span>Page {{ page }}</span>
+
+      {% if results|length == 15 %}
+        <a href="{{ url_for('search',
+            query=query,
+            category=category,
+            type=opinion_type,
+            page=page + 1) }}"
+            class="no-link">🡪</a>
+      {% endif %}
+
+      </div>
+
+    {% else %}
+        {% if query == "" %}
+        <h2>No results :(</h2>
+        <h4>Try something else!</h4>
+        {% else %}
+        <h2>No results for {{ query }} :(</h2>
+        <h4>Try different filters!</h4>
+        {% endif %}
+        {% if session.user_id %}
+          <a href="/new_opinion">
+              <button class="button">Create one!</button>
+          </a>
+        {% else %}
+        <p><a href="/login">Log in</a> to create one!</p>
+        {% endif %}
+
+    {% endif %}
+
+    <p>
+    <a href="/">Back home</a>
+    </p>
+  </div>
+    
+
+</body>
 </html>
