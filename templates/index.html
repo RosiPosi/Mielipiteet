@@ -24,19 +24,21 @@
       {% endfor %}
     </ul>
 
+    {% if page > 1 or items|length == 15 %}
       <div class="pagination">
 
-      {% if page > 1 %}
+        {% if page > 1 %}
           <a href="/?page={{ page - 1 }}" class="no-link">🡨</a>
-      {% endif %}
+        {% endif %}
 
-      <span>Page {{ page }}</span>
+        <span>Page {{ page }}</span>
 
-      {% if items|length == 15 %}
+        {% if items|length == 15 %}
           <a href="/?page={{ page + 1 }}" class="no-link">🡪</a>
-      {% endif %}
+        {% endif %}
 
-    </div>
+      </div>
+    {% endif %}
 
   </div>
 

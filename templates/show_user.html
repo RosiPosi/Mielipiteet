@@ -17,21 +17,21 @@
       {% endfor %}
     </ul>
 
-    <div class="pagination">
+    {% if page > 1 or items|length == 15 %}
+      <div class="pagination">
 
-      {% if page > 1 %}
-        <a href="/user/{{ user.id }}?page={{ page - 1 }}"
-          class="no-link">🡨</a>
-      {% endif %}
+        {% if page > 1 %}
+          <a href="/?page={{ page - 1 }}" class="no-link">🡨</a>
+        {% endif %}
 
-      <span>Page {{ page }}</span>
+        <span>Page {{ page }}</span>
 
-      {% if items|length == 15 %}
-        <a href="/user/{{ user.id }}?page={{ page + 1 }}"
-          class="no-link">🡪</a>
-      {% endif %}
+        {% if items|length == 15 %}
+          <a href="/?page={{ page + 1 }}" class="no-link">🡪</a>
+        {% endif %}
 
-    </div>
+      </div>
+    {% endif %}
 
   <p>
     <a href="/"><button>Back</button></a>
