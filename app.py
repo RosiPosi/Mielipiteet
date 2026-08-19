@@ -9,8 +9,6 @@ import config
 import posts
 import users
 
-print("USING ITEMS FILE:", posts.__file__)
-
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
@@ -107,7 +105,6 @@ def vote():
 def new_post():
     check_login()
     classes = posts.get_all_classes()
-    print("CLASSES:", classes)
     return render_template("new_post.html", classes=classes)
 
 @app.route("/create_opinion", methods=["POST"])
@@ -120,7 +117,7 @@ def create_item():
     user_id = session["user_id"]
 
     if not title or len(title) > 50:
-        flash("ERROR: Please input a title in the requested format.")
+        flash("ERROR: Title can be at most 50 characters.")
         return redirect("/new_opinion")
     if len(description) > 1000:
         flash("ERROR: Description can be at most 1000 characters.")
