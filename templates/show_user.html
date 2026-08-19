@@ -21,18 +21,19 @@
       <div class="pagination">
 
         {% if page > 1 %}
-          <a href="/?page={{ page - 1 }}" class="no-link">🡨</a>
+          <a href="/user/{{ user.id }}?page={{ page - 1 }}"
+            class="no-link">🡨</a>
         {% endif %}
 
         <span>Page {{ page }}</span>
 
         {% if items|length == 15 %}
-          <a href="/?page={{ page + 1 }}" class="no-link">🡪</a>
+          <a href="/user/{{ user.id }}?page={{ page + 1 }}"
+            class="no-link">🡪</a>
         {% endif %}
 
       </div>
     {% endif %}
-
   <p>
     <a href="/"><button>Back</button></a>
   </p>
