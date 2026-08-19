@@ -46,6 +46,18 @@
       <a href="/register"><button>Create an account</button></a></p>
     {% endif %}
   </div>
+  <div class="header_center">
+    <a href="/" class="no-link-dark">Home</a> │ 
+    {% if session.username %}
+    <a href="/new_opinion" class="no-link-dark">New opinion</a> │ 
+    <a href="/user/{{ session.user_id }}" class="no-link-dark">Profile</a> │ 
+    <a href="/logout" class="no-link-dark">Log out</a>
+    {% endif %}
+    {% if not session.username %}
+    <a href="/login" class="no-link-dark">Log in</a> │ 
+    <a href="/register" class="no-link-dark">Create an account</a>
+    {% endif %}
+  </div>
     <div class="content">
     {% block content %}{% endblock %}
     </div>
