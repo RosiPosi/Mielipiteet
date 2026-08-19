@@ -45,5 +45,5 @@ Added 500000 test opinions.
 Time taken: 1.5802 seconds
 
 Voidaan havaita, että mitä enemmän lisätään kerralla, sitä hitaammaksi prosessi muuttuu.
-Koodi lisäsi tietokantaan 5000-500000 julkaisua ja kaikki ilmestyi sivulle moitteettomasti. 
+Koodi lisäsi tietokantaan 5000-500000 julkaisua ja kaikki ilmestyi sivulle moitteettomasti.
 Jos julkaisuja on kuitenkin liikaa, sivusta tulee hyvin pitkä. Tämän takia tietokohteiden sivutus on kätevää.
