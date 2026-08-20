@@ -116,12 +116,12 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
+    errors = []
+
     if not title or len(title) > 50:
-        flash("ERROR: Title can be at most 50 characters.")
-        return redirect("/new_opinion")
+        errors.append("ERROR: Title must be between 1 and 50 characters.")
     if len(description) > 1000:
-        flash("ERROR: Description can be at most 1000 characters.")
-        return redirect("/new_opinion")
+        errors.append("ERROR: Description can be at most 1000 characters.")
 
     all_classes = posts.get_all_classes()
 
@@ -130,12 +130,17 @@ def create_item():
         if entry:
             category, name = entry.split(":")
             if category not in all_classes:
-                flash("ERROR: Non-existent category")
-                return redirect("/new_opinion")
+                errors.append("ERROR: Non-existent category.")
+                continue
             if name not in all_classes[category]:
-                flash("ERROR: Non-existent category")
-                return redirect("/new_opinion")
+                errors.append("ERROR: Non-existent category.")
+                continue
             classes.append((category, name))
+
+    if errors:
+        for error in errors:
+            flash(error)
+        return redirect("/new_opinion")
 
     posts.add_item(title, description, user_id, classes)
 
