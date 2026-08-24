@@ -56,7 +56,8 @@ def show_post(post_id):
     if "user_id" in session:
         user_vote = posts.has_user_voted(post_id, session["user_id"])
 
-    return render_template("show_post.html", post=post, classes=classes, post_classes=post_classes,
+    return render_template("show_post.html", post=post, classes=classes, 
+                           post_classes=post_classes,
                            comments=comments, images=images,
                            reaction_counts=reaction_counts, user_vote=user_vote)
 
@@ -187,7 +188,8 @@ def edit_post(post_id):
     for entry in posts.get_classes(post_id):
         selected_classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_post.html", post=post, selected_classes=selected_classes,
+    return render_template("edit_post.html", post=post,
+                           selected_classes=selected_classes,
                            all_classes=all_classes, classes=all_classes)
 
 @app.route("/update_opinion", methods=["POST"])
@@ -333,8 +335,8 @@ def search():
     results = posts.search_results(query, category, opinion_type, page)
 
     return render_template("search_results.html", query=query, results=results, 
-                           category=category, opinion_type=opinion_type, 
-                        classes=classes, page=page)
+                            category=category, opinion_type=opinion_type, 
+                            classes=classes, page=page)
 
 @app.route("/register")
 def register():
