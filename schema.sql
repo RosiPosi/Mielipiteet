@@ -4,7 +4,7 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
-CREATE TABLE items (
+CREATE TABLE posts (
     id INTEGER PRIMARY KEY,
     title TEXT,
     description TEXT,
@@ -13,17 +13,17 @@ CREATE TABLE items (
 
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    post_id INTEGER REFERENCES posts,
     user_id INTEGER REFERENCES users,
     comment TEXT
 );
 
 CREATE TABLE votes (
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    post_id INTEGER REFERENCES posts,
     user_id INTEGER REFERENCES users,
     reaction TEXT,
-    UNIQUE(item_id, user_id)
+    UNIQUE(post_id, user_id)
 );
 
 CREATE TABLE classes (
@@ -32,33 +32,33 @@ CREATE TABLE classes (
     value TEXT
 );
 
-CREATE TABLE item_classes (
+CREATE TABLE post_classes (
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    post_id INTEGER REFERENCES posts,
     title TEXT,
     value TEXT
 );
 
 CREATE TABLE images (
     id INTEGER PRIMARY KEY,
-    item_id INTEGER REFERENCES items,
+    post_id INTEGER REFERENCES posts,
     image BLOB
 );
 
-CREATE INDEX idx_items_user_id
-ON items(user_id);
+CREATE INDEX idx_posts_user_id
+ON posts(user_id);
 
-CREATE INDEX idx_item_classes_item_id
-ON item_classes(item_id);
+CREATE INDEX idx_post_classes_post_id
+ON post_classes(post_id);
 
-CREATE INDEX idx_item_classes_title_value
-ON item_classes(title, value);
+CREATE INDEX idx_post_classes_title_value
+ON post_classes(title, value);
 
-CREATE INDEX idx_votes_item_id
-ON votes(item_id);
+CREATE INDEX idx_votes_post_id
+ON votes(post_id);
 
-CREATE INDEX idx_comments_item_id
-ON comments(item_id);
+CREATE INDEX idx_comments_post_id
+ON comments(post_id);
 
-CREATE INDEX idx_images_item_id
-ON images(item_id);
+CREATE INDEX idx_images_post_id
+ON images(post_id);

@@ -8,7 +8,7 @@ start_time = time.perf_counter()
 
 for i in range(5000):
     db_connection.execute("""
-        INSERT INTO items(title, description, user_id)
+        INSERT INTO posts(title, description, user_id)
         VALUES (?, ?, ?)
     """, [f"Test opinion {i}", "Lorem ipsum...", 1])
 

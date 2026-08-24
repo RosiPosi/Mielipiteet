@@ -4,9 +4,9 @@
 
 {% block content %}
   <h1>Deleting your opinion</h1>
-  <p>Opinion: {{ item.title }}</p>
+  <p>Opinion: {{ post.title }}</p>
   <p>Are you <b>sure</b> you want to <b>delete</b> this opinion?</p>
-  <form action="/remove_opinion/{{ item.id }}" method="post">
+  <form action="/remove_opinion/{{ post.id }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="remove" value="Delete">
     <input type="submit" name="back" value="Back">

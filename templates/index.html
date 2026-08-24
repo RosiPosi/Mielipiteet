@@ -17,14 +17,14 @@
     <h2>Current hot takes:</h2>
     <ul>
       
-      {% for item in items %}
-        <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
+      {% for post in posts %}
+        <li><a href="/opinion/{{ post.id }}">{{ post.title }}</a></li>
       {% else %}
         No opinions yet.
       {% endfor %}
     </ul>
 
-    {% if page > 1 or items|length == 15 %}
+    {% if page > 1 or posts|length == 15 %}
       <div class="pagination">
 
         {% if page > 1 %}
@@ -33,7 +33,7 @@
 
         <span>Page {{ page }}</span>
 
-        {% if items|length == 15 %}
+        {% if posts|length == 15 %}
           <a href="/?page={{ page + 1 }}" class="no-link">🡪</a>
         {% endif %}
 

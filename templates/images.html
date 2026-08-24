@@ -14,7 +14,7 @@
         <input type="checkbox" name="image_id" value="{{ image.id }}">
         <img src="/image/{{ image.id }}" alt="Image for opinion"/>
         {% endfor %}
-        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <input type="hidden" name="post_id" value="{{ post.id }}">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <p>
           <input type="submit" value="Remove selected" />
@@ -32,12 +32,12 @@
         <label for="image">Image</label>
         <input id="image" type="file" name="image" accept=".png" />
         </p>
-        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <input type="hidden" name="post_id" value="{{ post.id }}">
         <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
         <input type="submit" value="Add" />
     </form>
   <p>
-    <a href="/opinion/{{ item.id }}"><button>Back</button></a>
+    <a href="/opinion/{{ post.id }}"><button>Back</button></a>
   </p>
 
 {% endblock %}

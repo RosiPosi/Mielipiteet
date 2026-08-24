@@ -16,15 +16,15 @@
         {% if query == "" %}
         <h2>Results:</h2>
         <ul>
-        {% for item in results %}
-            <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
+        {% for post in results %}
+            <li><a href="/opinion/{{ post.id }}">{{ post.title }}</a></li>
         {% endfor %}
         </ul>
         {% else %}
         <h2>Opinions about {{ query }}:</h2>
         <ul>
-        {% for item in results %}
-            <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
+        {% for post in results %}
+            <li><a href="/opinion/{{ post.id }}">{{ post.title }}</a></li>
         {% endfor %}
         </ul>
         {% endif %}

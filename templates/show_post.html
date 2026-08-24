@@ -1,34 +1,34 @@
 {% extends "layout.html" %}
 
-{% block title %}{{ item.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
 
     <div class="post-page">
-    <h1 class="limit">{{ item.title }}</h1>
+    <h1 class="limit">{{ post.title }}</h1>
     <p>{% for image in images %}
     <img src="/image/{{ image.id }}" alt="Image for opinion"/>
     {% endfor %}
     </p>
 
-    {% if item.description and item.description.strip() %}
-    <div class="border">{{ item.description | show_lines }}</div>
+    {% if post.description and post.description.strip() %}
+    <div class="border">{{ post.description | show_lines }}</div>
     {% endif %}
 
     <p>
-      Opinion by: <a href="/user/{{ item.user_id }}" class="no-link">{{ item.username }}</a>
+      Opinion by: <a href="/user/{{ post.user_id }}" class="no-link">{{ post.username }}</a>
       <p>
       Categories:
-      {% for class in item_classes %}
+      {% for class in post_classes %}
       <span class="cat">{{ class.value }}</span>
       {% endfor %}
       </p>
     </p>
 
-    {% if session.user_id == item.user_id %}
-      <a href="/edit_opinion/{{ item.id }}" class="edit-btn">Edit text</a> •
-      <a href="/images/{{ item.id }}" class="edit-btn">Edit images</a> •
-      <a href="/remove_opinion/{{ item.id }}" class="edit-btn">Delete</a>
+    {% if session.user_id == post.user_id %}
+      <a href="/edit_opinion/{{ post.id }}" class="edit-btn">Edit text</a> •
+      <a href="/images/{{ post.id }}" class="edit-btn">Edit images</a> •
+      <a href="/remove_opinion/{{ post.id }}" class="edit-btn">Delete</a>
     {% endif %}
     <p>
       <a href="/"><button>Back</button></a>
@@ -47,7 +47,7 @@
           {% if not user_vote %}
 
           <form action="/vote" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
+          <input type="hidden" name="post_id" value="{{ post.id }}">
 
           <label for="reaction">What do you think?</label>
           <select id="reaction" name="reaction" required>
@@ -59,12 +59,12 @@
           <input type="submit" value="Vote" />
 
           </form>
-        {% elif session.needs_vote_comment == item.id|string %}
+        {% elif session.needs_vote_comment == post.id|string %}
 
         <p>You voted: {{ user_vote | upper }}</p>
 
           <form action="/comment" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
+          <input type="hidden" name="post_id" value="{{ post.id }}">
           <p>
               <label for="comment">Please explain your vote!:</label> </br>
               <textarea id="comment" name="comment" rows="6" 
@@ -104,9 +104,9 @@
         {% endfor %}
       </ul>
 
-      {% if session.user_id and user_vote and session.needs_vote_comment != item.id|string %}
+      {% if session.user_id and user_vote and session.needs_vote_comment != post.id|string %}
          <form action="/comment" method="post">
-          <input type="hidden" name="item_id" value="{{ item.id }}">
+          <input type="hidden" name="post_id" value="{{ post.id }}">
           <p>
               <label for="comment"></label> </br>
               <textarea id="comment" name="comment" rows="6" 
