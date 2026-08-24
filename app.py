@@ -231,7 +231,7 @@ def update_item():
 @app.route("/remove_opinion/<int:item_id>", methods=["GET", "POST"])
 def remove_post(item_id):
     check_login()
-
+    classes = posts.get_all_classes()
     item = posts.get_item(item_id)
     if not item:
         abort(404)
@@ -239,7 +239,7 @@ def remove_post(item_id):
         abort(403)
 
     if request.method == "GET":
-        return render_template("remove_post.html", item=item)
+        return render_template("remove_post.html", item=item, classes=classes)
 
     if request.method == "POST":
         check_csrf()
@@ -285,8 +285,9 @@ def edit_images(item_id):
         abort(403)
 
     images = posts.get_images(item_id)
+    classes = posts.get_all_classes()
 
-    return render_template("images.html", item=item, images=images)
+    return render_template("images.html", item=item, images=images, classes=classes)
 
 @app.route("/image/<int:image_id>")
 def show_image(image_id):

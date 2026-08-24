@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Images</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}Images{% endblock %}
 
-<body>
-
-  <div class="header">
+{% block content %}
   <h1>Images</h1>
-  </div>
 
   <p>
     {{ images | count }} images attached.
@@ -47,6 +40,4 @@
     <a href="/opinion/{{ item.id }}"><button>Back</button></a>
   </p>
 
-</body>
-
-</html>
+{% endblock %}
