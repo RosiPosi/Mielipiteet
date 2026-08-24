@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Logging in</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}Log in{% endblock %}
 
-<body>
-  <div class="header_center">
-  <h1>Welcome back to ༺ Hot Takes ༻</h1>
-  </div>
+{% block content %}
+
   <div class="centered">
     <h2>Log in</h2>
     {% if request.args.get('registered') %}
@@ -34,12 +28,12 @@
     
     <form action="/login" method="post">
       <p>
-        Username: <br />
-        <input type="text" name="username" required/>
+        <label for="username">Username:</label> <br />
+        <input type="text" name="username" id="username" required/>
       </p>
       <p>
-        Password: <br />
-        <input type="password" name="password" required/>
+        <label for="password">Password:</label> <br />
+        <input type="password" name="password" id="password" required/>
       </p>
       <input type="submit" value="Log in" />
     </form>
@@ -48,6 +42,5 @@
       <a href="/"><button>Back</button></a>
     </p>
   </div>
-</body>
 
-</html>
+{% endblock %}

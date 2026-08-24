@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Registration</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}Registration{% endblock %}
 
-<body>
-  <div class="header_center">
-  <h1>Welcome to ༺ Hot Takes ༻</h1>
-  </div>
+{% block content %}
+
   <div class="centered">
     <h2>Register</h2>
     {% for message in get_flashed_messages() %}
@@ -38,6 +32,5 @@
       <a href="/"><button>Back</button></a>
     </p>
   </div>
-</body>
 
-</html>
+{% endblock %}

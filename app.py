@@ -340,7 +340,8 @@ def search():
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    classes = posts.get_all_classes()
+    return render_template("register.html", classes=classes)
 
 @app.route("/create", methods=["POST"])
 def create():
@@ -364,8 +365,9 @@ def create():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    classes = posts.get_all_classes()
     if request.method == "GET":
-        return render_template("login.html")
+        return render_template("login.html", classes=classes)
 
     if request.method == "POST":
         username = request.form["username"]
@@ -379,7 +381,7 @@ def login():
             return redirect("/")
         else:
             flash("ERROR: wrong username or password.")
-            return render_template("login.html")
+            return render_template("login.html", classes=classes)
 
 @app.route("/logout")
 def logout():
