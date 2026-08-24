@@ -7,7 +7,7 @@
     <div class="post-page">
     <h1 class="limit">{{ item.title }}</h1>
     <p>{% for image in images %}
-    <img src="/image/{{ image.id }}" alt="Image for topic"/>
+    <img src="/image/{{ image.id }}" alt="Image for opinion"/>
     {% endfor %}
     </p>
 
@@ -19,7 +19,7 @@
       Opinion by: <a href="/user/{{ item.user_id }}" class="no-link">{{ item.username }}</a>
       <p>
       Categories:
-      {% for class in classes %}
+      {% for class in item_classes %}
       <span class="cat">{{ class.value }}</span>
       {% endfor %}
       </p>

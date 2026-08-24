@@ -46,7 +46,8 @@ def show_post(item_id):
     item = posts.get_item(item_id)
     if not item:
         abort(404)
-    classes = posts.get_classes(item_id)
+    classes = posts.get_all_classes()
+    item_classes = posts.get_classes(item_id)
     comments = posts.get_comments(item_id)
     images = posts.get_images(item_id)
     reaction_counts = posts.get_reaction_counts(item_id)
@@ -55,7 +56,7 @@ def show_post(item_id):
     if "user_id" in session:
         user_vote = posts.has_user_voted(item_id, session["user_id"])
 
-    return render_template("show_post.html", item=item, classes=classes,
+    return render_template("show_post.html", item=item, classes=classes, item_classes=item_classes,
                            comments=comments, images=images,
                            reaction_counts=reaction_counts, user_vote=user_vote)
 
