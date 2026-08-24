@@ -2,6 +2,8 @@ import db
 import sqlite3
 import time
 
+# To test the database, run this file
+
 db_connection = db.get_connection()
 
 start_time = time.perf_counter()
