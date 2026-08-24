@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Deleting</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}Deleting{% endblock %}
 
-<body>
-  <div class="header">
+{% block content %}
   <h1>Deleting your opinion</h1>
-  </div>
   <p>Opinion: {{ item.title }}</p>
   <p>Are you <b>sure</b> you want to <b>delete</b> this opinion?</p>
   <form action="/remove_opinion/{{ item.id }}" method="post">
@@ -17,6 +11,5 @@
     <input type="submit" name="remove" value="Delete">
     <input type="submit" name="back" value="Back">
   </form>
-</body>
 
-</html>
+{% endblock %}
