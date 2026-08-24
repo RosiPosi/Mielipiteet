@@ -13,15 +13,20 @@
 
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
-        <select name="category">
+      <p>
+        <label for="search-query" class="invis">Search</label>
+        <input type="text" id="search-query" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
+
+        <label for="search-category" class="invis">Category</label>
+        <select name="category" id="search-category">
           <option value="">All categories</option>
           {% for option in classes["Category"] %}
               <option value="{{ option }}"{% if category == option %}selected{% endif %}>{{ option }}</option>
           {% endfor %}
         </select>
 
-        <select name="type">
+        <label for="search-type" class="invis">Type</label>
+        <select name="type" id="search-type">
           <option value="">All types</option>
           {% for option in classes["Type"] %}
               <option value="{{ option }}"{% if opinion_type == option %}selected{% endif %}>{{ option }}</option>

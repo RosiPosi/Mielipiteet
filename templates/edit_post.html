@@ -7,17 +7,21 @@
   <h1>Edit your opinion</h1>
 
   <form action="/update_opinion" method="post">
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
     <p>
-      Title: <br />
-      <input type="text" size="60" name="title" value="{{ post.title }}" />
+      <label for="title">Title:</label> <br />
+      <input type="text" id="title" size="60" name="title" value="{{ post.title }}" maxlength="50" required/>
     </p>
     <p>
-      Description: <br />
-      <textarea name="description" rows="7" cols="60">{{ post.description }}</textarea>
+      <label for="description">Description:</label> <br />
+      <textarea id="description" name="description" rows="7" cols="60" maxlength="1000" required>{{ post.description }}</textarea>
     </p>
     {% for class in all_classes %}
-    <p>{{ class }} <br />
-      <select name="classes">
+    <p>
+      <label for="class{{ class }}">{{ class }}:</label> <br />
+      <select name="classes" id="class{{ class }}">
         <option value="">(choose)</option>
       {% for option in all_classes[class] %}
         {% if selected_classes[class] == option %}
