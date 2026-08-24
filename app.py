@@ -178,14 +178,14 @@ def edit_post(item_id):
         abort(403)
 
     all_classes = posts.get_all_classes()
-    classes = {}
+    selected_classes = {}
     for my_class in all_classes:
-        classes[my_class] = ""
+        selected_classes[my_class] = ""
     for entry in posts.get_classes(item_id):
-        classes[entry["title"]] = entry["value"]
+        selected_classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_post.html", item=item, classes=classes,
-                           all_classes=all_classes)
+    return render_template("edit_post.html", item=item, selected_classes=selected_classes,
+                           all_classes=all_classes, classes=all_classes)
 
 @app.route("/update_opinion", methods=["POST"])
 def update_item():

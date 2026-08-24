@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Editing</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+{% block title %}Editing{% endblock %}
 
-<body>
-  <div class="header">
-  <h1>Edit your topic</h1>
+{% block content %}
 
-  {% if session.username %}
-    <p>You're logged in as <a href="/user/{{ session.user_id }}" 
-      class="no-link-dark">{{ session.username }}</a>
-    <a href="/logout" class="logout_btn"><button>Log out</button></a></p>
-  {% endif %}
-
-  {% if not session.username %}
-    <p><a href="/login"><button>Log in</button></a>
-    <a href="/register"><button>Create an account</button></a></p>
-  {% endif %}
-  </div>
+  <h1>Edit your opinion</h1>
 
   <form action="/update_opinion" method="post">
     <p>
@@ -36,7 +20,7 @@
       <select name="classes">
         <option value="">(choose)</option>
       {% for option in all_classes[class] %}
-        {% if classes[class] == option %}
+        {% if selected_classes[class] == option %}
         <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
         {% else %}
         <option value="{{ class }}:{{ option }}">{{ option }}</option>
@@ -56,4 +40,4 @@
 
 </body>
 
-</html>
+{% endblock %}
