@@ -5,6 +5,11 @@
 {% block content %}
 
     <div class="post-page">
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
     <h1 class="limit">{{ post.title }}</h1>
     <p>{% for image in images %}
     <img src="/image/{{ image.id }}" alt="Image for opinion"/>

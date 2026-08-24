@@ -151,13 +151,16 @@ def create_post():
 def comment():
     check_login()
     check_csrf()
-
+    post_id = request.form["post_id"]
     comment_text = request.form["comment"]
-    if not comment_text or len(comment_text) > 450:
+    
+    if not comment_text:
+        flash("ERROR: Comment cannot be empty.")
+        return redirect("/opinion/" + str(post_id))
+    if len(comment_text) > 450:
         flash("ERROR: Comments can be at most 450 characters.")
         return redirect("/opinion/" + str(post_id))
 
-    post_id = request.form["post_id"]
     post = posts.get_post(post_id)
     if not post:
         abort(403)
