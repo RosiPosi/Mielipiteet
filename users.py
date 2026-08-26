@@ -40,5 +40,4 @@ def check_login(username, password):
 
     if check_password_hash(password_hash, password):
         return user_id
-    else:
-        return None
+    return None

@@ -35,8 +35,7 @@ def show_lines(content):
 @app.route("/")
 def index():
     page = request.args.get("page", 1, type=int)
-    if page < 1:
-        page = 1
+    page = max(page, 1)
     all_posts = posts.get_posts(page)
     classes = posts.get_all_classes()
     return render_template("index.html", posts=all_posts, classes=classes, page=page)
@@ -56,7 +55,7 @@ def show_post(post_id):
     if "user_id" in session:
         user_vote = posts.has_user_voted(post_id, session["user_id"])
 
-    return render_template("show_post.html", post=post, classes=classes, 
+    return render_template("show_post.html", post=post, classes=classes,
                            post_classes=post_classes,
                            comments=comments, images=images,
                            reaction_counts=reaction_counts, user_vote=user_vote)
@@ -68,14 +67,13 @@ def show_user(user_id):
         abort(404)
 
     page = request.args.get("page", 1, type=int)
-    if page < 1:
-        page = 1
+    page = max(page, 1)
 
     user_posts = users.get_post(user_id, page)
     post_count = users.get_post_count(user_id)
     classes = posts.get_all_classes()
 
-    return render_template("show_user.html", user=user, posts=user_posts, 
+    return render_template("show_user.html", user=user, posts=user_posts,
                            post_count=post_count, classes=classes, page=page)
 
 @app.route("/vote", methods=["POST"])
@@ -154,7 +152,7 @@ def comment():
     check_csrf()
     post_id = request.form["post_id"]
     comment_text = request.form["comment"]
-    
+
     if not comment_text:
         flash("ERROR: Comment cannot be empty.")
         return redirect("/opinion/" + str(post_id))
@@ -251,8 +249,7 @@ def remove_post(post_id):
         if "remove" in request.form:
             posts.remove_post(post_id)
             return redirect("/")
-        else:
-            return redirect("/opinion/" + str(post_id))
+        return redirect("/opinion/" + str(post_id))
 
 @app.route("/add_image", methods=["POST"])
 def add_image():
@@ -328,14 +325,13 @@ def search():
     opinion_type = request.args.get("type", "").strip()
     page = request.args.get("page", 1, type=int)
 
-    if page < 1:
-        page = 1
+    page = max(page, 1)
 
     classes = posts.get_all_classes()
     results = posts.search_results(query, category, opinion_type, page)
 
-    return render_template("search_results.html", query=query, results=results, 
-                            category=category, opinion_type=opinion_type, 
+    return render_template("search_results.html", query=query, results=results,
+                            category=category, opinion_type=opinion_type,
                             classes=classes, page=page)
 
 @app.route("/register")
@@ -379,9 +375,8 @@ def login():
             session["username"] = username
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
-        else:
-            flash("ERROR: wrong username or password.")
-            return render_template("login.html", classes=classes)
+        flash("ERROR: wrong username or password.")
+        return render_template("login.html", classes=classes)
 
 @app.route("/logout")
 def logout():

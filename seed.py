@@ -1,6 +1,5 @@
-import db
-import sqlite3
 import time
+import db
 
 # To test the database, run this file
 
