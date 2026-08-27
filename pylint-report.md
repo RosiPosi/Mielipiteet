@@ -89,7 +89,15 @@ Raportissa mainitaan paljon docstring-kommentteiden puuttuminen. Sovelluksen teo
 ```
 app.py:26:14: W0613: Unused argument 'error' (unused-argument)
 ```
-Pylint antaa varoituksen, koska `error`-parametria ei käytetä funktion sisällä. Flaskin virheenkäsittelymekanismi kuitenkin vaatii error-parametrin, jotta virheenkäsittelijä voi vastaanottaa Flaskin välittämän virheobjektin. Virheen tietoja ei kuitenkin tarvita, koska käyttäjä ohjataan kuitenkin etusivulle.
+
+Ilmoitukseen liittyvä koodi:
+```python
+@app.errorhandler(403)
+def forbidden(error):
+    return redirect("/")
+```
+
+Pylint antaa varoituksen, koska `error`-parametria ei käytetä funktion sisällä. Flaskin virheenkäsittelymekanismi kuitenkin vaatii error-parametrin, jotta virheenkäsittelijä voi vastaanottaa Flaskin välittämän virheobjektin. Virheen tietoja ei kuitenkin tarvita, koska käyttäjä ohjataan muutenkin etusivulle.
 
 ## Puuttuva palautusarvo:
 ```
