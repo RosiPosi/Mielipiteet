@@ -87,15 +87,18 @@ def vote():
     allowed = {"yes", "meh", "no"}
 
     if reaction not in allowed:
-        return "Invalid reaction."
+        flash("Invalid reaction.")
+        return redirect("/opinion/" + str(post_id))
 
     if posts.has_user_voted(post_id, session["user_id"]):
-        return "You have already voted."
+        flash("You have already voted.")
+        return redirect("/opinion/" + str(post_id))
 
     try:
         posts.add_vote(post_id, session["user_id"], reaction)
     except sqlite3.IntegrityError:
-        return "You have already voted."
+        flash("You have already voted.")
+        return redirect("/opinion/" + str(post_id))
 
     session["needs_vote_comment"] = post_id
 
